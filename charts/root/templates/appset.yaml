@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-set
+  namespace: argocd
+spec:
+  generators:
+  - list:
+      elements:
+      - name: demo-a
+      - name: demo-b
+  template:
+    metadata:
+      name: '{{ "{{name}}" }}'
+    spec:
+      project: default
+      source:
+        repoURL: {{ .Values.repoURL }}
+        targetRevision: main
+        path: workloads/nginx
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{ "{{name}}" }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
