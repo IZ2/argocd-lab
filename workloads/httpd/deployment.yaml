@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
       - name: httpd
-        image: httpd
+        image: httpd@sha256:32e9403360ab2f1047523e72f256527fb9aee68b342abf6ad03f0d629157f3d9
